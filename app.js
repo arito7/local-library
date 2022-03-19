@@ -3,9 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
+const mongoDb =
+  'mongodb+srv://admin:Testeru123@local-library.shweh.mongodb.net/local-library?retryWrites=true&w=majority';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
+db.on('connection', () => {
+  console.log('connected to db');
+});
 
 var app = express();
 
