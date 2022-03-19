@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header><%- include('./partials/navbar') %></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div class="container">
+        <h1 class="truncate">ID: <%= bookinstance._id %></h1>
+        <table>
+          <tbody>
+            <tr>
+              <th>Title</th>
+              <td>
+                <a href="<%= bookinstance.book.url %>">
+                  <%= bookinstance.book.title %>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Imprint</th>
+              <td><%= bookinstance.imprint %></td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td
+                class="<%- bookinstance.status === 'Available' ? 'green-text' : 'red-text' %>"
+              >
+                <%= bookinstance.status %>
+              </td>
+            </tr>
+            <% if (bookinstance.status !== 'Available') { %>
+            <tr>
+              <th>Due back</th>
+              <td><%= bookinstance.due_back_formatted %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
