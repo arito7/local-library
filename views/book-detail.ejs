@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div>
+        <h1>Title: <%= book.title %></h1>
+        <table>
+          <tbody>
+            <tr>
+              <th>Author</th>
+              <td>
+                <a href="<%- book.author.url %>"><%= book.author.name %></a>
+              </td>
+            </tr>
+            <tr>
+              <th style="vertical-align: initial">Summary</th>
+              <td><%= book.summary %></td>
+            </tr>
+            <tr>
+              <th>ISBN</th>
+              <td><%= book.isbn %></td>
+            </tr>
+            <tr>
+              <th>Genre</th>
+              <td>
+                <% if (book.genre.length > 0) {book.genre.forEach(genre => { %>
+                <span><a href="<%= genre.url %>"><%= genre.name %></a></span>
+                <% })} %>
+              </td>
+            </tr>
+            <tr>
+              <th style="vertical-align: initial">Copies</th>
+              <td>
+                <ul class="collection">
+                  <% if (book_instances.length > 0) {
+                  book_instances.forEach(copy=> { %>
+                  <li class="collection-item">
+                    <p
+                      class="<%- copy.status === 'Available' ? 'green-text' : 'red-text' %>"
+                    >
+                      <%= copy.status %>
+                    </p>
+                    <p>Imprint: <%= copy.imprint %></p>
+                    <p>Due back: <%= copy.due_back_formatted %></p>
+                    <p>ID: <a href="<%= copy.url %>"><%= copy._id %></a></p>
+                  </li>
+                  <% })} else { %> There are no copies of this book in the
+                  library <% } %>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
