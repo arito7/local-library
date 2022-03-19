@@ -5,7 +5,7 @@
     <header><%- include('./partials/navbar') %></header>
     <main>
       <%- include('./partials/sidebar') %>
-      <div>
+      <div class="container">
         <h1>Genre: <%= genre.name %></h1>
         <% if (genre_books.length > 0) { %> <% genre_books.forEach(book => { %>
         <div class="row">
