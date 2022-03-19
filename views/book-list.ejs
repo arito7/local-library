@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head') %>
+  <body>
+    <header></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div>
+        <h1><%= title %></h1>
+        <table>
+          <thead>
+            <th>Book</th>
+            <th>Author</th>
+          </thead>
+          <tbody>
+            <% book_list.forEach(book => { %>
+            <tr>
+              <td><a href="<%=book.url %>"><%= book.title %></a></td>
+              <td><%= book.author.name %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

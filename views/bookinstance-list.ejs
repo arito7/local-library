@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div>
+        <h1><%= title %></h1>
+        <table>
+          <thead>
+              <tr>
+                  <th>Book</th>
+                  <th>Availability</th>
+                  <th>Due</th>
+              </tr>
+          </thead>
+          <tbody>
+            <% bookinstance_list.forEach(bookinstance => { %>
+            <tr>
+              <td><%= bookinstance.book.title %></td>
+              <td class=<%- bookinstance.status==='Available' ? 'green-text' : 'red-text' %> ><%= bookinstance.status %></td>
+              <% if (bookinstance.status !== 'Available') { %>
+                <td><%= bookinstance.due_back_formatted %></td>
+              <% } %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
