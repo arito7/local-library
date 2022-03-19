@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div>
+        <h1><%= title %></h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Author</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% author_list.forEach(author => { %>
+            <tr>
+              <td><a href="<%-author.url%>"><%= author.name %> </a></td>
+              <td class="right align"><%= author.lifespan %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
