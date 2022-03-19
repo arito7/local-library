@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header><%- include('./partials/navbar') %></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div class="container">
+        <h1>Author: <%= author.name %></h1>
+        <p><%= author.lifespan %></p>
+        <ul class="collection with-header">
+          <li class="collection-item">Books</li>
+          <% if (author_books.length > 0) { author_books.forEach(book => { %>
+          <li class="collection-item">
+            <a href="<%= book.url %>"><%= book.title %> </a>
+            <p><%= book.summary %></p>
+          </li>
+          <% })} else { %>
+          <li class="collection-item">This author has no books</li>
+          <% } %>
+        </ul>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

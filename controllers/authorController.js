@@ -1,5 +1,6 @@
-const { nextTick } = require('async');
 const Author = require('../models/author');
+const Book = require('../models/book');
+const async = require('async');
 
 // display list of all authors
 exports.author_list = function (req, res, next) {
@@ -17,8 +18,27 @@ exports.author_list = function (req, res, next) {
 };
 
 // display detail page for a specific author
-exports.author_detail = function (req, res) {
-  res.send(`NOT IMPLEMENTED: Author detail: ${req.params.id}`);
+exports.author_detail = function (req, res, next) {
+  async.parallel(
+    {
+      author: function (cb) {
+        Author.findById(req.params.id).exec(cb);
+      },
+      author_books: function (cb) {
+        Book.find({ author: req.params.id }, 'title summary').exec(cb);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      res.render('author-detail', {
+        title: 'Author Detail',
+        author: results.author,
+        author_books: results.author_books,
+      });
+    }
+  );
 };
 
 // Display Author create form on GET.
