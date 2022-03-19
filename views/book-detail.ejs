@@ -26,9 +26,15 @@
             <tr>
               <th>Genre</th>
               <td>
-                <% if (book.genre.length > 0) {book.genre.forEach(genre => { %>
-                <span><a href="<%= genre.url %>"><%= genre.name %></a></span>
-                <% })} %>
+                <% if (book.genre.length > 0) { for( let i = 0; i <
+                book.genre.length; i+=1 ) { %>
+                <span>
+                  <a href="<%= book.genre[i].url %>">
+                    <%= book.genre[i].name %>
+                  </a>
+                  <%- i < book.genre.length - 1 ? ', ' : '' %>
+                </span>
+                <% }} %>
               </td>
             </tr>
             <tr>
@@ -44,7 +50,9 @@
                       <%= copy.status %>
                     </p>
                     <p>Imprint: <%= copy.imprint %></p>
+                    <% if(copy.status !== 'Available') {%>
                     <p>Due back: <%= copy.due_back_formatted %></p>
+                    <% } %>
                     <p>ID: <a href="<%= copy.url %>"><%= copy._id %></a></p>
                   </li>
                   <% })} else { %> There are no copies of this book in the
