@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div>
+        <h1>Genre: <%= genre.name %></h1>
+        <% if (genre_books.length > 0) { %> <% genre_books.forEach(book => { %>
+        <div class="row">
+          <div class="card blue darken-1 hoverable">
+            <div class="card-content white-text">
+              <span class="card-title">
+                <a class="white-text" href="<%= book.url %>"
+                  ><%= book.title %></a
+                >
+              </span>
+              <p><%= book.summary %></p>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <h5>This genre has no books</h5>
+        <% } %>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
