@@ -6,6 +6,20 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const { is } = require('express/lib/request');
 
+const bookValidationSchema = [
+  body('title', 'Title must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('author', 'Author must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('summary', 'Summary must not be empty')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('genre.*').escape(),
+];
+
 exports.index = function (req, res) {
   async.parallel(
     {
@@ -106,17 +120,7 @@ exports.book_create_get = function (req, res, next) {
 
 // Handle book create on POST.
 exports.book_create_post = [
-  body('title', 'Title must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('author', 'Author must not be empty.')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('summary', 'Summary must not be empty')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('genre.*').escape(),
+  bookValidationSchema,
   (req, res, next) => {
     // extract the validation errors from a request.
     const errors = validationResult(req);
@@ -240,20 +244,7 @@ exports.book_update_post = [
     }
     next();
   },
-  body('title', 'Title must not be empty.')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('author', 'Author must not be empty.')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('summary', 'Summary must not be empty')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('genre.*').escape(),
+  bookValidationSchema,
   (req, res, next) => {
     const errors = validationResult(req);
 
