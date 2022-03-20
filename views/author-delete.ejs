@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header><%- include('./partials/navbar') %></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div class="container">
+        <h1><%= title %>: <%= author.name %></h1>
+        <p><%= author.lifespan %></p>
+        <% if (author_books.length > 0) { %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card red">
+              <div class="card-content white-text">
+                <p>
+                  Delete the following books before attempting to delete this
+                  author.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="collection with-header">
+          <li class="collection-item">Books</li>
+          <% author_books.forEach(book => { %>
+          <li class="collection-item">
+            <a href="<%= book.url %>"><%= book.title %></a>
+          </li>
+          <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Do you really want to delete this Author?</p>
+        <form action="" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="hidden" value="<%= author._id %>" name="authorid" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 center-align">
+              <button class="btn" type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+        <% } %>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
