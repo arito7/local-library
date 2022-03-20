@@ -23,9 +23,12 @@
         <% }) %> <% } else { %>
         <h5>This genre has no books</h5>
         <% } %>
-        <div class="row">
-          <div class="col s12 center-align">
+        <div class="row center-align">
+          <div class="col s12 m6">
             <a class="btn" href="<%= genre.url %>/delete">Delete Genre</a>
+          </div>
+          <div class="col s12 m6">
+            <a href="<%= genre.url %>/update" class="btn">Update Genre</a>
           </div>
         </div>
       </div>
