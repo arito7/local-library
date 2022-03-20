@@ -6,23 +6,37 @@
     <main>
       <%- include('./partials/sidebar') %>
       <div class="container">
-        <h1>Genre: <%= genre.name %></h1>
-        <% if (genre_books.length > 0) { %> <% genre_books.forEach(book => { %>
         <div class="row">
-          <div class="card blue darken-1 hoverable">
-            <div class="card-content white-text">
-              <span class="card-title">
-                <a class="white-text" href="<%= book.url %>"
-                  ><%= book.title %></a
-                >
-              </span>
-              <p><%= book.summary %></p>
-            </div>
+          <div class="col s12">
+            <h2>Genre</h2>
+          </div>
+          <div class="col s12">
+            <h1 style="margin-top: 0"><%= genre.name %></h1>
           </div>
         </div>
-        <% }) %> <% } else { %>
-        <h5>This genre has no books</h5>
-        <% } %>
+
+        <div class="row">
+          <% if (genre_books.length > 0) { %> <% genre_books.forEach(book => {
+          %>
+          <div class="row">
+            <div class="card blue darken-1 hoverable">
+              <div class="card-content white-text">
+                <span class="card-title">
+                  <a class="white-text" href="<%= book.url %>"
+                    ><%= book.title %></a
+                  >
+                </span>
+                <p><%= book.summary %></p>
+              </div>
+            </div>
+          </div>
+          <% }) %> <% } else { %>
+          <div class="col s12 center-align">
+            <h5>This genre has no books</h5>
+          </div>
+          <% } %>
+        </div>
+
         <div class="row center-align">
           <div class="col s12 m6">
             <a class="btn" href="<%= genre.url %>/delete">Delete Genre</a>
