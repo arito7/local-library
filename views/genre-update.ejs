@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header><%- include('./partials/navbar') %></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+
+      <div class="container">
+        <h1><%= title %></h1>
+
+        <form action="" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <label for="name">Genre:</label>
+              <% if (locals.genre) { %>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value="<%= genre.name %>"
+              />
+              <% } else { %>
+              <input type="text" id="name" name="name" />
+              <% } %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12 center-align">
+              <button class="btn" type="submit">Update</button>
+            </div>
+          </div>
+        </form>
+
+        <% if (locals.errors) { errors.forEach(e => { %>
+        <p><%= e.msg %></p>
+        <% })} %>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
