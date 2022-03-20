@@ -3,6 +3,9 @@ const Book = require('../models/book');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 
+const genreValidationSchema = [
+  body('name', 'Genre name required').trim().isLength({ min: 1 }).escape(),
+];
 // Display list of all Genre.
 exports.genre_list = function (req, res, next) {
   Genre.find()
@@ -51,7 +54,7 @@ exports.genre_create_get = function (req, res, next) {
 
 // Handle Genre create on POST.
 exports.genre_create_post = [
-  body('name', 'Genre name required').trim().isLength({ min: 1 }).escape(),
+  genreValidationSchema,
   (req, res, next) => {
     // extract the validation errors from the req
     const errors = validationResult(req);
