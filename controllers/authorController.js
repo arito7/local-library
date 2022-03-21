@@ -2,6 +2,8 @@ const Author = require('../models/author');
 const Book = require('../models/book');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const { DateTime } = require('luxon');
+
 const authorValidationSchema = [
   body('first_name')
     .trim()
@@ -172,10 +174,39 @@ exports.author_delete_post = (req, res, next) => {
 
 // Display Author update form on GET.
 exports.author_update_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author update GET');
+  Author.findById(req.params.id).exec((err, author) => {
+    res.render('author-form', { title: 'Update Author', author });
+  });
 };
 
 // Handle Author update on POST.
-exports.author_update_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author update POST');
-};
+exports.author_update_post = [
+  authorValidationSchema,
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const author = new Author({
+      first_name: req.body.first_name,
+      family_name: req.body.family_name,
+      date_of_birth: req.body.date_of_birth,
+      date_of_death: req.body.date_of_death,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('author-form', {
+        title: 'Update Author',
+        author,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      Author.findByIdAndUpdate(req.params.id, author, {}, (err, theauthor) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(theauthor.url);
+      });
+    }
+  },
+];
