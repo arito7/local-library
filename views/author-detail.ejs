@@ -6,22 +6,45 @@
     <main>
       <%- include('./partials/sidebar') %>
       <div class="container">
-        <h1>Author: <%= author.name %></h1>
-        <p><%= author.lifespan %></p>
-        <ul class="collection with-header">
-          <li class="collection-item">Books</li>
-          <% if (author_books.length > 0) { author_books.forEach(book => { %>
-          <li class="collection-item">
-            <a href="<%= book.url %>"><%= book.title %> </a>
-            <p><%= book.summary %></p>
-          </li>
-          <% })} else { %>
-          <li class="collection-item">This author has no books</li>
-          <% } %>
-        </ul>
         <div class="row">
           <div class="col s12">
+            <h2>Author</h2>
+          </div>
+
+          <div class="col s12">
+            <h1 style="margin-top: 0"><%= author.name %></h1>
+          </div>
+
+          <div class="col s12">
+            <p style="margin-top: 0; font-size: 1.2rem">
+              <%= author.lifespan %>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <ul class="collection with-header">
+              <li class="collection-item">Books</li>
+              <% if (author_books.length > 0) { author_books.forEach(book => {
+              %>
+              <li class="collection-item">
+                <a href="<%= book.url %>"><%= book.title %> </a>
+                <p><%= book.summary %></p>
+              </li>
+              <% })} else { %>
+              <li class="collection-item">This author has no books</li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row center-align">
+          <div class="col s12 m6">
             <a class="btn" href="<%=`${author.url}/delete`%>">Delete Author</a>
+          </div>
+          <div class="col s12 m6">
+            <a class="btn" href="<%=`${author.url}/update`%>">Update Author</a>
           </div>
         </div>
       </div>
