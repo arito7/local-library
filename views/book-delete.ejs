@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head',{title}) %>
+  <body>
+    <header><%- include('./partials/navbar') %></header>
+    <main>
+      <%- include('./partials/sidebar') %>
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <h1><%= title %></h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <table>
+              <tbody>
+                <tr>
+                  <th>Title</th>
+                  <td><a href="<%= book.url %>"><%= book.title %></a></td>
+                </tr>
+                <tr>
+                  <th>Author</th>
+                  <td>
+                    <a href="<%= book.author.url %>"><%= book.author.name %></a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Summary</th>
+                  <td><%= book.summary %></td>
+                </tr>
+                <tr>
+                  <th>ISBN</th>
+                  <td><%= book.isbn %></td>
+                </tr>
+                <tr>
+                  <th>Genre</th>
+                  <td>
+                    <% book.genre.forEach(g => { %>
+                    <a href="<%= g.url %>"><%= g.name %></a>
+                    <% }) %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <% if (book_instances.length > 0) { %>
+          <div class="col s12">
+            <div class="card red lighten-5">
+              <div class="card-content red-text">
+                The following instances of this book must be deleted before you
+                can delete this book.
+              </div>
+            </div>
+          </div>
+          <% book_instances.forEach(bookinstance => { %>
+          <div class="col s12">
+            <a href="<%= bookinstance.url %>">
+              <div class="card hoverable">
+                <div class="card-content">
+                  <p><%= bookinstance.imprint %></p>
+                  <p><%= bookinstance.status %></p>
+                  <p><%= bookinstance.due_back %></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <% })} else { %>
+          <div class="col s12 center-align">
+            <form action="" method="post">
+              <input type="text" name="id" hidden value="<%= book._id %>" />
+              <button class="btn red" type="submit">Delete</button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+
+        <% if (locals.errors) { errors.forEach(e => { %>
+        <p><%= e.msg %></p>
+        <% })} %>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
