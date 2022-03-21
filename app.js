@@ -6,8 +6,11 @@ const helmet = require('helmet');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-const mongoDb =
+
+const dev_db_url =
   'mongodb+srv://admin:Testeru123@local-library.shweh.mongodb.net/local-library?retryWrites=true&w=majority';
+
+const mongoDb = process.env.MONGODB_URI || dev_db_url;
 
 mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
