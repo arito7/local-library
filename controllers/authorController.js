@@ -2,6 +2,30 @@ const Author = require('../models/author');
 const Book = require('../models/book');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const authorValidationSchema = [
+  body('first_name')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage('First name must be specified.')
+    .isAlphanumeric()
+    .withMessage('First name has non-alphanumeric characters.'),
+  body('family_name')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage('Family name must be specified')
+    .isAlphanumeric()
+    .withMessage('Family name has non-alphanumeric characters.'),
+  body('date_of_birth', 'Invalid date of birth')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
+  body('date_of_death', 'Invalid date of death')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
+];
 
 // display list of all authors
 exports.author_list = function (req, res, next) {
@@ -49,28 +73,7 @@ exports.author_create_get = function (req, res, next) {
 
 // Handle Author create on POST.
 exports.author_create_post = [
-  body('first_name')
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage('First name must be specified.')
-    .isAlphanumeric()
-    .withMessage('First name has non-alphanumeric characters.'),
-  body('family_name')
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage('Family name must be specified')
-    .isAlphanumeric()
-    .withMessage('Family name has non-alphanumeric characters.'),
-  body('date_of_birth', 'Invalid date of birth')
-    .optional({ checkFalsy: true })
-    .isISO8601()
-    .toDate(),
-  body('date_of_death', 'Invalid date of death')
-    .optional({ checkFalsy: true })
-    .isISO8601()
-    .toDate(),
+  authorValidationSchema,
   (req, res, next) => {
     // extract the validation errors from a request
     const errors = validationResult(req);
