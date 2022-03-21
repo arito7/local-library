@@ -6,63 +6,75 @@
     <main>
       <%- include('./partials/sidebar') %>
       <div class="container">
-        <h1><%= title %></h1>
+        <div class="row">
+          <div class="col s12">
+            <h1><%= title %></h1>
+          </div>
+
+          <% if (locals.bookinstance) { %>
+          <div class="col s12">
+            <p>ID: <%= bookinstance._id %> </p>
+          </div>
+          <% } %>
+        </div>
+
         <form action="" method="post">
           <div class="row">
             <div class="col s12">
-              <div class="card red">
-                <div class="card-content white-text">
+              <div class="card red lighten-5">
+                <div class="card-content red-text">
                   <p>An asterisk (*) denotes a required field.</p>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
+
             <div class="input-field col s12">
               <select class="browser-default" name="book" id="book">
+                <% if (locals.bookinstance) { book_list.forEach(book => { %>
+                <option value="<%= book._id %>" <%= bookinstance.book._id.toString() === book._id.toString() ? 'selected' : '' %> ><%= book.title %></option>
+                <% })} else { %>
                 <option value="" disabled selected>Choose a Book(*)</option>
                 <% book_list.forEach(book => { %>
                 <option value="<%=book._id%>"><%= book.title %></option>
-                <% }) %>
+                <% })} %>
               </select>
             </div>
-          </div>
-          <div class="row">
+
             <div class="input-field col s12">
               <label for="imprint">Imprint(*)</label>
-              <input type="text" id="imprint" name="imprint" />
+              <input type="text" id="imprint" name="imprint" value="<%= locals.bookinstance ? bookinstance.imprint : '' %>"/>
             </div>
-          </div>
-          <div class="row">
+
             <div class="input-field col s12">
               <label for="due_date">Date when book available</label>
               <input
                 type="date"
                 id="due_date"
                 name="due_date"
-                placeholder="mm/dd/yyy"
+                value="<%= locals.bookinstance ? new Date(bookinstance.due_back).toISOString().split('T')[0] : '' %>"
               />
             </div>
-          </div>
-          <div class="row">
+
             <div class="input-field col s12">
               <select class="browser-default" name="status" id="status">
-                <option value="" disabled selected>
-                  Choose current status(*)
-                </option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Available">Available</option>
-                <option value="Loaned">Loaned</option>
-                <option value="Reserved">Reserved</option>
+                <% if (!locals.bookinstance) { %> 
+                  <option value="" disabled selected>
+                    Choose current status(*)
+                  </option>
+                <% } %>   
+                <% ['Maintenance','Available','Loaned','Reserved'].forEach(status => { %>
+                  <option value="<%= status %>" <%= !locals.bookinstance ? '' : bookinstance.status === status ? 'selected' : '' %> ><%= status %></option>
+                <% }) %>
               </select>
             </div>
-          </div>
-          <div class="row">
+
             <div class="col s12 center-align">
               <button class="btn" type="submit">Submit</button>
             </div>
+
           </div>
         </form>
+
         <% if (locals.errors) { errors.forEach(e => { %>
         <p><%= e.msg %></p>
         <% })} %>
