@@ -18,7 +18,7 @@
           <tbody>
             <% bookinstance_list.forEach(bookinstance => { %>
             <tr>
-              <td><a href="<%= bookinstance.book.url %>"><%= bookinstance.book.title %></a></td>
+              <td><a href="<%= bookinstance.url %>"><%= bookinstance.book.title %></a></td>
               <td class=<%- bookinstance.status==='Available' ? 'green-text' : 'red-text' %> ><%= bookinstance.status %></td>
               <% if (bookinstance.status !== 'Available') { %>
                 <td><%= bookinstance.due_back_formatted %></td>
