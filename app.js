@@ -1,6 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const compression = require('compression');
+const helmet = require('helmet');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
@@ -18,6 +20,9 @@ const usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');
 
 const app = express();
+
+app.use(compression()); // Compress all routes
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
